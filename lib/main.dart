@@ -22,24 +22,40 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('LayoutApp')),
-      body: Column(
+      //appBar: AppBar(title: Text('LayoutApp')),
+      body: ListView(
         children: <Widget>[
+          Image.asset(
+            'images/lake.jpg',
+            width: 600,
+            height: 240,
+            fit: BoxFit.cover,
+            ),
           new TitleSection(), //Transformando o código aninhado em uma classe, e instânciando a mesma com "new"
           new ButtonSection(),
+          Container(
+            padding: EdgeInsets.all(32),
+            child: Text(
+              'Lake Oeschinen lies at the foot of the Blüemlisalp in the Bernese '
+              'Alps. Situated 1,578 meters above sea level, it is one of the '
+              'larger Alpine Lakes. A gondola ride from Kandersteg, followed by a '
+              'half-hour walk through pastures and pine forest, leads you to the '
+              'lake, which warms to 20 degrees Celsius in the summer. Activities '
+              'enjoyed here include rowing, and riding the summer toboggan run.',
+              softWrap: true,
+              textAlign: TextAlign.left,
+            ),
+          ),
         ],
       ),
     );
   }
 }
 
-
-
 class ButtonSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(32),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
@@ -55,6 +71,7 @@ class ButtonSection extends StatelessWidget {
       ),
     );
   }
+
   Column _buildButtonColumn(Color color, IconData iconData, String text) {
     return Column(
       mainAxisSize: MainAxisSize.min,
