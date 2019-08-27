@@ -26,27 +26,35 @@ class HomePage extends StatelessWidget {
       body: Column(
         children: <Widget>[
           new TitleSection(), //Transformando o código aninhado em uma classe, e instânciando a mesma com "new"
-          Container(
-            padding: const EdgeInsets.all(32),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                    _buildButtonColumn(Colors.blue, Icons.call, 'Chamadas'),
-                    _buildButtonColumn(Colors.blue, Icons.star, 'Favoritos'),
-                    _buildButtonColumn(Colors.blue, Icons.share, 'Compartilhar')
-                  ],
-                ),
-              ],
-            ),
+          new ButtonSection(),
+        ],
+      ),
+    );
+  }
+}
+
+
+
+class ButtonSection extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(32),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              _buildButtonColumn(Colors.blue, Icons.call, 'Chamadas'),
+              _buildButtonColumn(Colors.blue, Icons.star, 'Favoritos'),
+              _buildButtonColumn(Colors.blue, Icons.share, 'Compartilhar'),
+            ],
           ),
         ],
       ),
     );
   }
-
   Column _buildButtonColumn(Color color, IconData iconData, String text) {
     return Column(
       mainAxisSize: MainAxisSize.min,
