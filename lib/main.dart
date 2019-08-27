@@ -30,7 +30,7 @@ class HomePage extends StatelessWidget {
             width: 600,
             height: 240,
             fit: BoxFit.cover,
-            ),
+          ),
           new TitleSection(), //Transformando o código aninhado em uma classe, e instânciando a mesma com "new"
           new ButtonSection(),
           Container(
@@ -50,6 +50,55 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
+}
+
+class TitleSection extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(
+          32), //Espaçamento de 32(px?) da Widget-Pai (Seção Titulo)
+      child: Row(
+        //Row with 3 children
+        children: <Widget>[
+          Expanded(
+            //Expanded to fill remaining space
+            child: Column(
+              //Column of two children
+              crossAxisAlignment: CrossAxisAlignment.start,
+              //mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                  //Text{1}
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: Text(
+                    'Geschinen Lake Campground',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                Container(
+                  //Text{2}
+                  child: Text(
+                    'Kandersteg Switzerland',
+                    style: TextStyle(color: Colors.grey[500]),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          new FavoriteWidget(),
+          /*Icon(
+            Icons.star,
+            color: Colors.red[500],
+          ),*/
+        ],
+      ),
+    );
+  }
+
+  void testButtom() {}
 }
 
 class ButtonSection extends StatelessWidget {
@@ -97,49 +146,47 @@ class ButtonSection extends StatelessWidget {
   }
 }
 
-class TitleSection extends StatelessWidget {
+class FavoriteWidget extends StatefulWidget {
+  @override
+  _FavoriteWidgetState createState() => _FavoriteWidgetState();
+}
+
+class _FavoriteWidgetState extends State<FavoriteWidget> {
+  int _countFavorite = 40;
+  bool _isFavorite = false;
+  IconData startIcon = Icons.star_border;
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(
-          32), //Espaçamento de 32(px?) da Widget-Pai (Seção Titulo)
-      child: Row(
-        //Row with 3 children
-        children: <Widget>[
-          Expanded(
-            //Expanded to fill remaining space
-            child: Column(
-              //Column of two children
-              crossAxisAlignment: CrossAxisAlignment.start,
-              //mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Container(
-                  //Text{1}
-                  padding: const EdgeInsets.only(bottom: 8),
-                  child: Text(
-                    'Geschinen Lake Campground',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                Container(
-                  //Text{2}
-                  child: Text(
-                    'Kandersteg Switzerland',
-                    style: TextStyle(color: Colors.grey[500]),
-                  ),
-                )
-              ],
-            ),
-          ),
-          Icon(
-            Icons.star,
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        Container(
+          padding: EdgeInsets.all(0),
+          child: IconButton(
+            icon: Icon(startIcon),
             color: Colors.red[500],
+            onPressed: changeStateTextFavorite,
           ),
-          Text('41')
-        ],
-      ),
+        ),
+        Text('$_countFavorite')
+      ],
+    );
+  }
+
+  void changeStateTextFavorite() {
+    setState(
+      () {
+        if (_isFavorite) {
+          this.startIcon = Icons.star_border;
+          this._isFavorite = false;
+          this._countFavorite--;
+        } else {
+          this.startIcon = Icons.star;
+          this._isFavorite = true;
+          this._countFavorite++;
+        }
+      },
     );
   }
 }
