@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
-void main() => runApp(MyApp());
+MyApp myApp =
+    new MyApp(); //Guardando referencia da classe para acessa-la posteriormente
+
+void main() => runApp(myApp);
 
 class MyApp extends StatelessWidget {
   @override
@@ -31,7 +34,7 @@ class HomePage extends StatelessWidget {
             height: 240,
             fit: BoxFit.cover,
           ),
-          new TitleSection(), //Transformando o código aninhado em uma classe, e instânciando a mesma com "new"
+          new TitleSection(), //Transformando o código aninhado em uma classe, e instânciando a mesma com comando "new"
           new ButtonSection(),
           Container(
             padding: EdgeInsets.all(32),
@@ -164,7 +167,7 @@ class _FavoriteWidgetState extends State<FavoriteWidget> {
         Container(
           padding: EdgeInsets.all(0),
           child: IconButton(
-            icon: Icon(startIcon),
+            icon: Icon(_isFavorite ? Icons.star : Icons.star_border),
             color: Colors.red[500],
             onPressed: changeStateTextFavorite,
           ),
