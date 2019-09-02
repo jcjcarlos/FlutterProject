@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 MyApp myApp =
     new MyApp(); //Guardando referencia da classe para acessa-la posteriormente
 
-void main() => runApp(myApp);
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
@@ -104,6 +104,52 @@ class TitleSection extends StatelessWidget {
   void testButtom() {}
 }
 
+class FavoriteWidget extends StatefulWidget {
+  @override
+  _FavoriteWidgetState createState() => _FavoriteWidgetState();
+}
+
+class _FavoriteWidgetState extends State<FavoriteWidget> {
+  int _countFavorite = 40;
+  bool _isFavorite = false;
+  //IconData startIcon = Icons.star_border; //Lógica do IconData adicionando no método build,
+  //pois o mesmo sempre é chamado quando acionando setstate
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        Container(
+          padding: EdgeInsets.all(0),
+          child: IconButton(
+            icon: Icon(_isFavorite ? Icons.star : Icons.star_border),
+            color: Colors.red[500],
+            onPressed: changeStateTextFavorite,
+          ),
+        ),
+        Text('$_countFavorite')
+      ],
+    );
+  }
+
+  void changeStateTextFavorite() {
+    setState(
+      () {
+        /*if (_isFavorite) {
+          this._isFavorite = false;
+          this._countFavorite--;
+        } else {
+          this._isFavorite = true;
+          this._countFavorite++;
+        }*/
+        this._isFavorite =
+            !_isFavorite; //Inverte-se o valor da variável booleana
+      },
+    );
+  }
+}
+
 class ButtonSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -149,47 +195,23 @@ class ButtonSection extends StatelessWidget {
   }
 }
 
-class FavoriteWidget extends StatefulWidget {
-  @override
-  _FavoriteWidgetState createState() => _FavoriteWidgetState();
-}
-
-class _FavoriteWidgetState extends State<FavoriteWidget> {
-  int _countFavorite = 40;
-  bool _isFavorite = false;
-  IconData startIcon = Icons.star_border;
-
+class Test extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        Container(
-          padding: EdgeInsets.all(0),
-          child: IconButton(
-            icon: Icon(_isFavorite ? Icons.star : Icons.star_border),
-            color: Colors.red[500],
-            onPressed: changeStateTextFavorite,
-          ),
-        ),
-        Text('$_countFavorite')
-      ],
-    );
+    return TapBoxState();
   }
+}
 
-  void changeStateTextFavorite() {
-    setState(
-      () {
-        if (_isFavorite) {
-          this.startIcon = Icons.star_border;
-          this._isFavorite = false;
-          this._countFavorite--;
-        } else {
-          this.startIcon = Icons.star;
-          this._isFavorite = true;
-          this._countFavorite++;
-        }
-      },
+class TapBox extends StatefulWidget {
+  @override
+  _TapBoxState createState() => _TapBoxState();
+}
+
+class _TapBoxState extends State<TapBox> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      
     );
   }
 }
