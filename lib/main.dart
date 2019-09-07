@@ -103,7 +103,8 @@ class _ParentTapBoxBState extends State<ParentTapBoxB> {
 class TapBoxB extends StatelessWidget {
   final bool
       active; //Variaveis finais só podem ser inicializadas com parâmetros nomeados
-  final ValueChanged<bool> onChanged;
+  final ValueChanged<bool> onChanged; //Este atributo armazena o método void _changeValue(bool newValue)
+  //da classe _ParentTapBoxBState
 
   TapBoxB(
       {Key key,
