@@ -26,7 +26,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('TapBox')),
-      body: ParentTapBoxB(),
+      body: ParentTapBoxC(),
     );
   }
 }
@@ -103,8 +103,9 @@ class _ParentTapBoxBState extends State<ParentTapBoxB> {
 class TapBoxB extends StatelessWidget {
   final bool
       active; //Variaveis finais só podem ser inicializadas com parâmetros nomeados
-  final ValueChanged<bool> onChanged; //Este atributo armazena o método void _changeValue(bool newValue)
-  //da classe _ParentTapBoxBState
+  final ValueChanged<bool>
+      onChanged; //Este atributo armazena o método void _changeValue(bool newValue)
+  //da classe _TapBoxBState
 
   TapBoxB(
       {Key key,
@@ -132,3 +133,123 @@ class TapBoxB extends StatelessWidget {
     this.onChanged(!this.active);
   }
 }
+//Fim do TapBoxB
+
+//Inicio TapBoxC. O Widget-filho gerencia parte de seu estado, enquanto o Widget pai gerencia outro
+class ParentTapBoxC extends StatefulWidget {
+  @override
+  _ParentTapBoxCState createState() => _ParentTapBoxCState();
+}
+
+class _ParentTapBoxCState extends State<ParentTapBoxC> {
+  bool active = true;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        Container(
+          padding: EdgeInsets.all(20),
+          child: TapBoxC(
+            isActive: this.active,
+            handleTapBoxChange: _handleTapBoxChange,
+          ),
+          width: 400,
+          height: 400,
+        ),
+        Text(
+          'Parent: $active',
+          style: TextStyle(fontSize: 50),
+        )
+      ],
+    );
+  }
+
+  void _handleTapBoxChange(bool newValue) {
+    setState(() {
+      this.active = newValue;
+    });
+  }
+}
+
+class TapBoxC extends StatefulWidget {
+  final bool isActive;
+  final ValueChanged<bool> handleTapBoxChange;
+
+  TapBoxC(
+      {this.isActive,
+      @required this.handleTapBoxChange}); //Adicionando valores das variáveis
+
+  @override
+  _TapBoxCState createState() =>
+      _TapBoxCState(); //Não é necessário passar as variáveis como parâmetro, pois as mesmas são acessadas pelo Widget-Filho
+}
+
+class _TapBoxCState extends State<TapBoxC> {
+  bool _highlight = false;
+  String locateTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      child: Container(
+        child: Center(
+          child: Text(
+            widget.isActive
+                ? 'Son: true,  $locateTap'
+                : 'Son: false $locateTap',
+            style: TextStyle(color: Colors.red, fontSize: 60),
+          ),
+        ),
+        width: 100,
+        height: 100,
+        decoration: BoxDecoration(
+          border: this._highlight
+              ? Border.all(
+                  color: Colors.teal,
+                  width: 10,
+                )
+              : null,
+          color: widget.isActive ? Colors.lightGreen[500] : Colors.grey[300],
+        ),
+      ),
+      onTap: this.handleTapBox,
+      onTapCancel: this.handleTapBoxCancel,
+      onTapUp: this.handleTapUpBox,
+      onTapDown: this.handleTapDownBox,
+    );
+  }
+
+  void handleTapBox() { //Quando um GestureDetector é pressionado e solto
+    setState(() {
+      widget.handleTapBoxChange(!widget.isActive);
+     this.locateTap = 'Tap';
+     //print('Tap');
+     this._highlight = !this._highlight;
+    });
+  }
+
+  void handleTapBoxCancel() { //O toque é 'deslizado' para fora do GestureDetector
+    setState(() {
+      this.locateTap = 'TapBoxCancel';
+      //print('TapCancel');
+      this._highlight = false;
+    });
+  }
+
+  void handleTapUpBox(TapUpDetails tapUpDetails) { //Quando o GestureDetetor é solto
+    setState(() {
+      this.locateTap = 'TapUp';
+      this._highlight = false;
+    });
+  }
+
+  void handleTapDownBox(TapDownDetails tapDownDetails) { //Quando o GestureDetector é pressionado
+    setState(() {
+      //widget.handleTapBoxChange(!widget.isActive);
+      this.locateTap = 'TapDown';
+      this._highlight = true;
+    });
+  }
+}
+//Fim TapBoxC
